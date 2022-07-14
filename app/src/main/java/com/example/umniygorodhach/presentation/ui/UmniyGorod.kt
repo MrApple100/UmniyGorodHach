@@ -37,6 +37,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 import com.example.umniygorodhach.presentation.screens.events.components.EventsTopAppBar
 import com.example.umniygorodhach.presentation.screens.home.HomeViewModel
+import com.example.umniygorodhach.presentation.screens.home.components.HomeTopAppBar
+import com.example.umniygorodhach.presentation.screens.news.components.NewsTopAppBar
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheet
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheetViewModel
 
@@ -87,7 +89,9 @@ fun ITLabApp(
         Custom_Scaffold(
             topBar = {
                 when (currentScreen) {
-                    AppScreen.Home -> EventsTopAppBar()
+                    AppScreen.Home -> HomeTopAppBar()
+                    AppScreen.News -> NewsTopAppBar()
+
                     /*is AppScreen.EventDetails -> BasicTopAppBar(
                         text = stringResource(
                             currentScreen.screenNameResource,
