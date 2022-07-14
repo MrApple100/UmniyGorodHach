@@ -22,9 +22,9 @@ import com.example.umniygorodhach.ImagePosition
 import ru.rtuitlab.itlab.data.remote.api.users.models.UserEventModel
 import ru.rtuitlab.itlab.presentation.screens.events.components.RoundedLinearProgressIndicator
 import ru.rtuitlab.itlab.presentation.ui.components.IconizedRow
-import ru.rtuitlab.itlab.presentation.ui.extensions.fromIso8601
-import ru.rtuitlab.itlab.presentation.ui.extensions.fromIso8601ToInstant
-import ru.rtuitlab.itlab.presentation.ui.extensions.toUiString
+import com.example.umniygorodhach.presentation.ui.extensions.fromIso8601
+import com.example.umniygorodhach.presentation.ui.extensions.fromIso8601ToInstant
+import com.example.umniygorodhach.presentation.ui.extensions.toUiString
 import com.example.umniygorodhach.AppColors
 
 @Composable

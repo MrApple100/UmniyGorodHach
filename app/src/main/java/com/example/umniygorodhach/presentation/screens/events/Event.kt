@@ -32,7 +32,7 @@ import com.example.umniygorodhach.BottomSheetViewModel
 import com.example.umniygorodhach.AppBarViewModel
 import com.example.umniygorodhach.CollapsibleScrollArea
 import com.example.umniygorodhach.SwipingStates
-import ru.rtuitlab.itlab.presentation.ui.extensions.fromIso8601
+import com.example.umniygorodhach.presentation.ui.extensions.fromIso8601
 import ru.rtuitlab.itlab.presentation.utils.AppBottomSheet
 import com.example.umniygorodhach.AppScreen
 import com.example.umniygorodhach.singletonViewModel
