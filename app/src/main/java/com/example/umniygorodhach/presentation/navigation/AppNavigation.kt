@@ -18,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navigation
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.example.umniygorodhach.presentation.screens.home.Home
+import com.example.umniygorodhach.presentation.screens.news.News
 
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheetViewModel
 import com.example.umniygorodhach.presentation.ui.components.shared_elements.LocalSharedElementsRootScope
@@ -71,6 +72,11 @@ fun AppNavigation(
 			resources,
 			appBarViewModel
 		)
+		newsGraph(
+			bottomSheetViewModel,
+			resources,
+			appBarViewModel
+		)
 
 		/*employeesGraph(
 			bottomSheetViewModel
@@ -104,6 +110,26 @@ private fun NavGraphBuilder.homeGraph(
 	) {
 		composable(AppScreen.Home.route) {
 			Home()
+		}
+	}
+}
+
+
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
+@ExperimentalPagerApi
+private fun NavGraphBuilder.newsGraph(
+	bottomSheetViewModel: BottomSheetViewModel,
+	resources: Resources,
+	appBarViewModel: AppBarViewModel
+) {
+
+	navigation(
+		startDestination = AppTab.News.startDestination,
+		route = AppTab.News.route
+	) {
+		composable(AppScreen.News.route) {
+			News()
 		}
 	}
 }
