@@ -19,13 +19,14 @@ sealed class AppTab(
     val icon: ImageVector,
     var accessible: Boolean = true
 ) {
-    object Home: AppTab("home_tab", AppScreen.Home.route, R.string.app_name, Icons.Default.Home)
-    object Health: AppTab("health_tab", AppScreen.Health.route, R.string.app_name, Icons.Default.HealthAndSafety)
-    object News: AppTab("news_tab", AppScreen.News.route, R.string.app_name, Icons.Default.Newspaper,)
-    object PlaceEvent: AppTab("placeevent_tab", AppScreen.PlaceEvent.route,  R.string.app_name, Icons.Default.Place,)
-    object Profile: AppTab("profile_tab", AppScreen.Profile.route, R.string.app_name, Icons.Default.People,)
-    object Rules: AppTab("rules_tab", AppScreen.Rules.route,  R.string.app_name, Icons.Default.Rule)
-    object Help: AppTab("help_tab", AppScreen.Help.route, R.string.app_name, Icons.Default.Help)
+    object Home: AppTab("home_tab", AppScreen.Home.route, R.string.home, Icons.Default.Home)
+    object Health: AppTab("health_tab", AppScreen.Health.route, R.string.health, Icons.Default.HealthAndSafety)
+    object News: AppTab("news_tab", AppScreen.News.route, R.string.news, Icons.Default.Newspaper,)
+    object PlaceEvent: AppTab("placeevent_tab", AppScreen.PlaceEvent.route,  R.string.placeevent, Icons.Default.Place,)
+    object Profile: AppTab("profile_tab", AppScreen.Profile.route, R.string.profile, Icons.Default.People,)
+    object MyTeam: AppTab("myteam_tab", AppScreen.MyTeam.route, R.string.myteam, Icons.Default.Flag,)
+    object Rules: AppTab("rules_tab", AppScreen.Rules.route,  R.string.rules, Icons.Default.Rule)
+    object Help: AppTab("help_tab", AppScreen.Help.route, R.string.help, Icons.Default.Help)
 
     fun saveState() = bundleOf(SCREEN_KEY to route)
 
@@ -35,6 +36,7 @@ sealed class AppTab(
         News -> AppScreen.News
         PlaceEvent -> AppScreen.PlaceEvent
         Profile -> AppScreen.Profile
+        MyTeam -> AppScreen.MyTeam
         Rules -> AppScreen.Rules
         Help -> AppScreen.Help
     }
@@ -49,6 +51,7 @@ sealed class AppTab(
                 News,
                 PlaceEvent,
                 Profile,
+                MyTeam,
                 Rules,
                 Help
             )
@@ -65,6 +68,7 @@ sealed class AppTab(
             News.route -> News
             PlaceEvent.route -> PlaceEvent
             Profile.route -> Profile
+            MyTeam.route -> MyTeam
             Rules.route -> Rules
             Help.route -> Help
             else            -> {throw IllegalArgumentException("Invalid route. Maybe you forgot to add a new screen to AppTabSaver.kt?")}
@@ -90,6 +94,7 @@ open class AppScreen(
     object News : AppScreen(R.string.app_name,"news")
     object PlaceEvent : AppScreen(R.string.app_name,"placeevent")
     object Profile : AppScreen(R.string.app_name,"profile")
+    object MyTeam : AppScreen(R.string.app_name,"myteam")
     object Rules : AppScreen(R.string.app_name,"rules")
     object Help : AppScreen(R.string.app_name,"help")
    /* // Employee-related
@@ -144,6 +149,7 @@ open class AppScreen(
             News,
             PlaceEvent,
             Profile,
+            MyTeam,
             Rules,
             Help
             /*Employees,
