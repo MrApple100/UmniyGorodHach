@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 
 class HomeRepository @Inject constructor(
-    private val eventsApi: HomeApi,
+    private val homeApi: HomeApi,
     private val handler: ResponseHandler
 ) {
 
