@@ -4,6 +4,7 @@ import com.example.traininghakatonsever.common.ResponseHandler
 import com.example.umniygorodhach.BuildConfig
 import com.example.umniygorodhach.data.remote.api.events.EventsApi
 import com.example.umniygorodhach.data.remote.api.home.HomeApi
+import com.example.umniygorodhach.data.remote.api.news.NewsApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -84,5 +85,9 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideHomeApi(retrofit: Retrofit): HomeApi = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create()
 
 }
