@@ -1,36 +1,56 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.30'
+   // id 'com.google.gms.google-services'
 }
 
 android {
-    compileSdk 32
+
+    compileSdkVersion 31
+
+    def HOST_URI = "HOST_URI"
+
+    def API_URI = "API_URI"
+
+    def CONFIG = { k -> "\"${project.properties.get(k)}\"" }
+    def CONFIG_RAW = { k -> "${project.properties.get(k)}" }
+
 
     defaultConfig {
         applicationId "com.example.umniygorodhach"
         minSdk 26
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 31
+        versionCode 4
+        versionName "1.2.4"
+
+        manifestPlaceholders = [
+                'appAuthRedirectScheme': 'com.example.traininghakatonsever'
+        ]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+
+        dimension "api"
+        resValue("string", HOST_URI, CONFIG("release.host.uri"))
+
+        buildConfigField("String", API_URI, CONFIG("release.api.uri"))
+
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+
+
+
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
     }
     buildFeatures {
         compose true
@@ -38,24 +58,73 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
+    buildToolsVersion '32.0.0'
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.activity:activity-compose:1.3.0-alpha02'
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
+    // Test
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Compose
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.3.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation "androidx.compose.ui:ui-util:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
+    implementation 'com.google.accompanist:accompanist-flowlayout:0.20.0'
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
+    implementation 'com.google.accompanist:accompanist-pager:0.20.0'
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.20.0"
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.21.1-beta"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation "androidx.hilt:hilt-navigation:1.0.0"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
+
+    // Markdown
+    implementation "io.noties.markwon:core:4.6.2"
+    implementation "io.noties.markwon:image:4.6.2"
+
+    // OpenID auth
+    implementation 'net.openid:appauth:0.11.1'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+
+    // Serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+
+    // Time
+    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.3.0'
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
+    implementation 'com.google.firebase:firebase-messaging-ktx:22.0.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Splash
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:2.1.0")
+
+
 }
