@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">UmniyGorodHach</string>
+    <string name="home">Главное</string>
+    <string name="health">Здоровье</string>
+    <string name="news">Новости</string>
+    <string name="placeevent" >Места&amp;События</string>
+    <string name="profile" >Профиль</string>
+    <string name="rules" >Правила</string>
+    <string name="help" >Помощь</string>
+    <string name="myteam">Моя Сборная</string>
+    <string name="at">в</string>
+    <string name="time_parsing_error">error</string>
+    <string name="results">Результаты</string>
 </resources>
