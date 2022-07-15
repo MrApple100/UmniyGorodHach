@@ -56,20 +56,7 @@
             android:exported="true" >
         </service>
 
-        <receiver
-            android:name=".MyReceiver"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
-            android:enabled="true"
-            android:exported="false">
 
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.REBOOT"/>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-        </receiver>
     </application>
 
 

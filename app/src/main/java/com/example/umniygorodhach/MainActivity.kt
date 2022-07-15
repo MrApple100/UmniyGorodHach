@@ -39,12 +39,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        intentService = Intent(this, NotificationService::class.java)
-        if (!isMyServiceRunning(NotificationService::class.java)) {
-            startService(intentService)
-        } else {
-            stopService(intentService)
-        }
+
         setContent {
            // val authState by authViewModel.authStateFlow.collectAsState(null)
             UmniyGorodTheme(){
