@@ -2,9 +2,11 @@ package com.example.umniygorodhach.data.di
 
 import com.example.traininghakatonsever.common.ResponseHandler
 import com.example.umniygorodhach.BuildConfig
+import com.example.umniygorodhach.data.remote.api.Notafications.NotApi
 import com.example.umniygorodhach.data.remote.api.events.EventsApi
 import com.example.umniygorodhach.data.remote.api.home.HomeApi
 import com.example.umniygorodhach.data.remote.api.news.NewsApi
+import com.example.umniygorodhach.data.remote.api.news.ResultsApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -89,5 +91,13 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun provideResultsApi(retrofit: Retrofit): ResultsApi = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun provideNotApi(retrofit: Retrofit): NotApi = retrofit.create()
 
 }

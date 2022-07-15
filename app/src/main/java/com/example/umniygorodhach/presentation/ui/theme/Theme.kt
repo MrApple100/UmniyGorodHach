@@ -29,7 +29,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun ITLabTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun UmniyGorodTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
 	LaunchedEffect(darkTheme) {
 		AppColors.isLightTheme = !darkTheme
 	}

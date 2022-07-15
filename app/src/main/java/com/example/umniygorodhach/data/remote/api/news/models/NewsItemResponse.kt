@@ -4,11 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NewsItemResponse(
-    val id : String,
+    val id : Int,
     val author : String,
     val title : String,
-    val pictureUrl : String,
-    val description : String,
-    val date : String
+    val picture : String,
+    val text : String,
+    val time : Int
 ) {
 }

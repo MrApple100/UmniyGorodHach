@@ -1,6 +1,7 @@
 package com.example.umniygorodhach.presentation.navigation
 
 import android.content.res.Resources
+import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.ExperimentalTransitionApi
@@ -15,9 +16,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
+import com.example.umniygorodhach.BuildConfig
+import com.example.umniygorodhach.R
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.example.umniygorodhach.presentation.screens.home.Home
+import com.example.umniygorodhach.presentation.screens.home.Raspisanie
 import com.example.umniygorodhach.presentation.screens.news.News
 
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheetViewModel
@@ -111,6 +116,10 @@ private fun NavGraphBuilder.homeGraph(
 		composable(AppScreen.Home.route) {
 			Home()
 		}
+		composable(AppScreen.Raspisanie.route) {
+			Raspisanie(
+			)
+		}
 	}
 }
 
@@ -129,6 +138,17 @@ private fun NavGraphBuilder.newsGraph(
 		route = AppTab.News.route
 	) {
 		composable(AppScreen.News.route) {
+			News()
+		}
+		composable(
+			route = AppScreen.News.route,
+			deepLinks = listOf(
+				navDeepLink {
+					uriPattern =
+						"${BuildConfig.API_URI}/news"
+				}
+			)
+		) {
 			News()
 		}
 	}

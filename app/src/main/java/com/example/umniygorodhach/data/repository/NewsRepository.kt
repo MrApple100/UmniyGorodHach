@@ -1,8 +1,10 @@
 package com.example.umniygorodhach.data.repository
 
+import android.util.Log
 import com.example.traininghakatonsever.common.ResponseHandler
 import com.example.umniygorodhach.data.remote.api.news.NewsApi
 import com.example.umniygorodhach.data.remote.api.news.models.NewsItemResponse
+import com.example.umniygorodhach.data.remote.api.news.models.TransItemResponse
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(
@@ -11,7 +13,18 @@ class NewsRepository @Inject constructor(
 ) {
 
     suspend fun fetchNews() = handler{
-        newsApi.getNews() as MutableList<NewsItemResponse>
+       val list = newsApi.getNews() as MutableList<NewsItemResponse>
+        list
+    }
+    suspend fun fetchTrans() = handler{
+         val list = newsApi.getTrans() as MutableList<TransItemResponse>
+        Log.d("Tag",list.toString())
+        list
+    }
+    suspend fun fetchOnlineMatch() = handler{
+        newsApi.getOnlineMatch()
+
+
     }
 
 }

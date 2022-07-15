@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.umniygorodhach.BuildConfig
 import com.example.umniygorodhach.R
 import com.example.umniygorodhach.data.remote.api.news.models.NewsItemResponse
 import com.example.umniygorodhach.presentation.screens.news.NewsViewModel
@@ -71,7 +72,7 @@ fun NewsItemCard(
 
 			) {
 
-					Row(
+					Column(
 						modifier = Modifier
 							.fillMaxWidth()
 
@@ -83,7 +84,7 @@ fun NewsItemCard(
 								spacing = 10.dp
 							) {
 								Text(
-									text = date.fromIso8601(LocalContext.current),
+									text = author,
 									style = MaterialTheme.typography.subtitle1
 								)
 							}
@@ -95,7 +96,7 @@ fun NewsItemCard(
 								spacing = 10.dp
 							) {
 								Text(
-									text = date.fromIso8601(LocalContext.current),
+									text = "15 июля в 2:21",
 									style = MaterialTheme.typography.subtitle1
 								)
 							}
@@ -122,10 +123,10 @@ fun NewsItemCard(
 						.fillMaxWidth()
 						.height(200.dp),
 					model = ImageRequest.Builder(LocalContext.current)
-						.data(newsItem.pictureUrl)
+						.data(BuildConfig.API_URI+"/news/"+newsItem.picture)
 						.crossfade(true)
 						.build(),
-					placeholder = painterResource(R.drawable.ic_launcher_background),
+					placeholder = painterResource(R.drawable.ic_wheel),
 					contentScale = ContentScale.FillBounds,
 					contentDescription = stringResource(R.string.app_name),
 
@@ -135,18 +136,16 @@ fun NewsItemCard(
 				AnimatedVisibility(expandedDeviceCardbool.value) {
 					Spacer(Modifier.height(10.dp))
 				}
-				if (description != null) {
-					AnimatedVisibility(expandedDeviceCardbool.value) {
-						Row(verticalAlignment = Alignment.CenterVertically) {
+				AnimatedVisibility(expandedDeviceCardbool.value) {
+					Row(verticalAlignment = Alignment.CenterVertically) {
 
-							Text(
-								text = description,
-								fontWeight = FontWeight(500),
-								fontSize = 16.sp,
-								lineHeight = 22.sp
-							)
+						Text(
+							text = text,
+							fontWeight = FontWeight(500),
+							fontSize = 16.sp,
+							lineHeight = 22.sp
+						)
 
-						}
 					}
 				}
 /*

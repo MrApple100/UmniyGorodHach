@@ -1,6 +1,9 @@
 package com.example.umniygorodhach
 
 
+import android.app.ActivityManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,14 +14,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import com.example.umniygorodhach.presentation.ui.ITLabApp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import kotlinx.serialization.ExperimentalSerializationApi
 import com.example.umniygorodhach.presentation.navigation.LocalNavController
-import com.example.umniygorodhach.presentation.ui.theme.ITLabTheme
+import com.example.umniygorodhach.presentation.ui.UmniyGorodApp
+import com.example.umniygorodhach.presentation.ui.theme.UmniyGorodTheme
 import com.example.umniygorodhach.presentation.utils.LocalActivity
+import com.google.accompanist.pager.ExperimentalPagerApi
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.ExperimentalSerializationApi
+
 
 @ExperimentalSerializationApi
 @ExperimentalPagerApi
@@ -29,11 +34,20 @@ import dagger.hilt.android.AndroidEntryPoint
 @ExperimentalStdlibApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    var intentService: Intent? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
+        intentService = Intent(this, NotificationService::class.java)
+        if (!isMyServiceRunning(NotificationService::class.java)) {
+            startService(intentService)
+        } else {
+            stopService(intentService)
+        }
         setContent {
            // val authState by authViewModel.authStateFlow.collectAsState(null)
-            ITLabTheme {
+            UmniyGorodTheme(){
                 Surface(color = MaterialTheme.colors.background) {
                     //when (authState?.isAuthorized) {
                      //   true -> {
@@ -41,7 +55,7 @@ class MainActivity : ComponentActivity() {
                                 LocalNavController provides rememberNavController(),
                                 LocalActivity provides this
                             ) {
-                                ITLabApp()
+                                UmniyGorodApp()
                             }
                         //}
                         //false -> AuthScreen { authViewModel.onLoginEvent(authPageLauncher) }
@@ -50,6 +64,15 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 }
 

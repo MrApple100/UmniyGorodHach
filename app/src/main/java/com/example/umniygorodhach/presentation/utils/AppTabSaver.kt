@@ -97,50 +97,10 @@ open class AppScreen(
     object MyTeam : AppScreen(R.string.app_name,"myteam")
     object Rules : AppScreen(R.string.app_name,"rules")
     object Help : AppScreen(R.string.app_name,"help")
-   /* // Employee-related
-    object Employees : AppScreen(R.string.app_name, "employees")
-    object EmployeeDetails : AppScreen(R.string.app_name, "employee/{userId}") // Has back button
 
-    // Feedback-related
-    object Feedback : AppScreen(R.string.app_name, "feedback")
-
-    // Events-related
-    object Events : AppScreen(R.string.app_name, "events")
-
-    @Parcelize
-    class EventDetails(val title: String) :
-        AppScreen(R.string.app_name, "event/{eventId}") { // Has back button
-        companion object {
-            const val route = "event/{eventId}"
-            val navLink: String = route.substringBefore("/{")
-        }
-    }
-
-    object EventNew : AppScreen(R.string.app_name, "event/new") // Has back button
-    object EventsNotifications :
-        AppScreen(R.string.app_name, "events/notifications") // Has back button
-
-    // Projects-related
-    object Projects : AppScreen(R.string.app_name, "projects")
-
-    // Devices-related
-    object Devices : AppScreen(R.string.app_name, "devices")
-
-    // Profile-related
-    object Profile : AppScreen(R.string.app_name, "profile")
+    object Raspisanie : AppScreen(R.string.app_name,"rasp")//has back button
 
 
-    // Reports-related
-    object Reports : AppScreen(R.string.app_name, "reports")
-    class ReportDetails(val title: String) : AppScreen(R.string.app_name, "report/{reportId}") {
-        companion object {
-            const val route = "report/{reportId}"
-            val navLink: String = route.substringBefore("/{")
-        }
-    }
-
-    object NewReport : AppScreen(R.string.app_name, "reports/new")
-*/
 
     companion object {
         fun getAll(context: Context) = listOf(
@@ -151,19 +111,9 @@ open class AppScreen(
             Profile,
             MyTeam,
             Rules,
-            Help
-            /*Employees,
-            EmployeeDetails,
-            Feedback,
-            Events,
-            EventDetails(context.resources.getString(R.string.app_name)),
-            EventsNotifications,
-            Projects,
-            Devices,
-            Profile,
-            Reports,
-            ReportDetails(context.resources.getString( R.string.app_name)),
-            NewReport*/
+            Help,
+            Raspisanie
+
         )
     }
 
