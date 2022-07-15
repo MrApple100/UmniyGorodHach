@@ -506,6 +506,7 @@ fun News(
         bottomSheetViewModel: BottomSheetViewModel
     ) {
         val newsItems by newsViewModel.newsItemsFlow.collectAsState()
+        newsItems.reverse()
         // val currentDeviceId = newsViewModel.deviceIdFlow.collectAsState()
 
         val transResource by newsViewModel.transItemsResponsesFlow.collectAsState()
