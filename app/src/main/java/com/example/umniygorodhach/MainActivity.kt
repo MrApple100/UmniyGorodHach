@@ -2,6 +2,9 @@ package com.example.umniygorodhach
 
 
 import android.app.ActivityManager
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +17,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.core.app.NotificationCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.umniygorodhach.presentation.navigation.LocalNavController
@@ -35,10 +39,13 @@ import kotlinx.serialization.ExperimentalSerializationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     var intentService: Intent? = null
+    lateinit var notificationManager: NotificationManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        notificationManager = this.getSystemService( NOTIFICATION_SERVICE) as NotificationManager;
         installSplashScreen()
+        sendNotification("Ticker","Приветственное уведомление","привет");
 
         setContent {
            // val authState by authViewModel.authStateFlow.collectAsState(null)
@@ -60,14 +67,38 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                return true
-            }
+
+
+    fun sendNotification(Ticker: String, Title: String, Text: String) {
+        val notificationIntent = Intent(this, MainActivity::class.java);
+        notificationIntent.setAction(Intent.ACTION_MAIN);
+        notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        val contentIntent = PendingIntent.getActivity(
+            getApplicationContext(),
+            0,
+            notificationIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        );
+
+        val builder = NotificationCompat.Builder(this);
+        builder.setContentIntent(contentIntent)
+            .setOngoing(true)   //invulnerable
+            .setTicker(Ticker)
+            .setContentTitle(Title)
+            .setSmallIcon(R.drawable.ic_wheel)
+            .setContentText(Text)
+            .setWhen(System.currentTimeMillis());
+
+        val notification: Notification;
+        if (android.os.Build.VERSION.SDK_INT <= 15) {
+            notification = builder.getNotification(); // API 15 and lower
+        } else {
+            notification = builder.build();
         }
-        return false
+
+        notificationManager.notify(500, notification);
+
     }
 }
 
