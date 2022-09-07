@@ -1,7 +1,11 @@
 package com.example.umniygorodhach.data.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.traininghakatonsever.common.ResponseHandler
 import com.example.umniygorodhach.BuildConfig
+import com.example.umniygorodhach.data.cachesqlite.database.TestDatabase
+import com.example.umniygorodhach.data.close.dao.TestDao
 import com.example.umniygorodhach.data.remote.api.events.EventsApi
 import com.example.umniygorodhach.data.remote.api.home.HomeApi
 import com.example.umniygorodhach.data.remote.api.news.NewsApi
@@ -9,6 +13,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -89,5 +94,14 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun provideTestDao(@ApplicationContext appContext: Context): TestDatabase = Room.databaseBuilder(appContext, TestDatabase::class.java, "test.db").build()
+
+    @Singleton
+    @Provides
+    fun providesDao(db:TestDatabase): TestDao = db.testDao()
+
 
 }

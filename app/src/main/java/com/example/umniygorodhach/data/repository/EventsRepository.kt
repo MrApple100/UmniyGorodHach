@@ -1,13 +1,14 @@
 package com.example.umniygorodhach.data.repository
 
 import com.example.traininghakatonsever.common.ResponseHandler
+import com.example.umniygorodhach.data.close.dao.TestDao
 import com.example.umniygorodhach.data.remote.api.events.EventsApi
 
 import javax.inject.Inject
 
 class EventsRepository @Inject constructor(
     private val eventsApi: EventsApi,
-    private val handler: ResponseHandler
+    private val handler: ResponseHandler,
 ) {
 
 	/*suspend fun fetchPendingEvents() = handler {
