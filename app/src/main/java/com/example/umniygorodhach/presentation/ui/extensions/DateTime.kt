@@ -4,8 +4,11 @@ import android.content.Context
 import android.util.Log
 import com.example.umniygorodhach.R
 import kotlinx.datetime.*
+import kotlinx.datetime.TimeZone
+import java.text.SimpleDateFormat
 import java.time.DateTimeException
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 private val timeZone = TimeZone.of("UTC+3")
 
@@ -56,3 +59,12 @@ fun String.fromIso8601ToInstant() =
 	).toKotlinInstant().toMoscowDateTime()
 
 fun nowAsIso8601() = java.time.Instant.now().toString()
+
+private fun String.getDateTimeFromUnix(): String? {
+
+		val sdf = SimpleDateFormat("MM/dd/yyyy/hh/mm/ss")
+		val netDate = Date((this.toLong()) * 1000)
+	netDate.hours
+		return sdf.format(netDate)
+
+}

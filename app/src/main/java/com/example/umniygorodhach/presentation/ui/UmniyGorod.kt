@@ -38,6 +38,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import com.example.umniygorodhach.presentation.screens.events.components.EventsTopAppBar
 import com.example.umniygorodhach.presentation.screens.home.HomeViewModel
 import com.example.umniygorodhach.presentation.screens.home.components.HomeTopAppBar
+import com.example.umniygorodhach.presentation.screens.home.components.RaspisanieTopAppBar
 import com.example.umniygorodhach.presentation.screens.news.components.NewsTopAppBar
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheet
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheetViewModel
@@ -52,7 +53,7 @@ import com.example.umniygorodhach.presentation.utils.singletonViewModel
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @Composable
-fun ITLabApp(
+fun UmniyGorodApp(
     appBarViewModel: AppBarViewModel = viewModel(),
     appTabsViewModel: AppTabsViewModel = singletonViewModel(),
     bottomSheetViewModel: BottomSheetViewModel = viewModel(),
@@ -91,6 +92,7 @@ fun ITLabApp(
                 when (currentScreen) {
                     AppScreen.Home -> HomeTopAppBar()
                     AppScreen.News -> NewsTopAppBar()
+                    AppScreen.Raspisanie -> RaspisanieTopAppBar(onBackAction)
 
                     /*is AppScreen.EventDetails -> BasicTopAppBar(
                         text = stringResource(
