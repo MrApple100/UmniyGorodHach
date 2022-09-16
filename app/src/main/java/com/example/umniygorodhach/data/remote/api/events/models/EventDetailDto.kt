@@ -9,24 +9,28 @@ data class EventDetailDto(
     val id: String,
     val title: String,
     val description: String,
+    val beginTime: String,
+    val endTime: String,
     val address: String,
-   // val eventType: EventTypeModel,
-    val shifts: List<Shift>
-) {
-   /* fun toEvent(salary: EventSalary?) =
+    val money : Int,
+    val currentParticipationCount: Int,
+    val targetParticipationCount: Int,
+    val eventType: String,
+    val picture : String,
+
+    ) {
+    fun toEvent() =
         EventDetail(
             id = id,
             title = title,
-            beginTime = shifts.minOf { it.beginTime },
-            endTime = shifts.maxOf { it.endTime },
-            salary = salary?.count,
+            beginTime = beginTime,
+            endTime = endTime,
+            money = money,
             address = address,
-            currentParticipationCount = shifts.sumOf { it.places.sumOf { it.participants.size } },
-            targetParticipationCount = shifts.sumOf { it.places.sumOf { it.targetParticipantsCount } },
+            currentParticipationCount = currentParticipationCount,
+            targetParticipationCount = targetParticipationCount,
             description = description,
-            type = eventType.title,
-            shifts = shifts,
-            shiftSalaries = salary?.shiftSalaries ?: emptyList(),
-            placeSalaries = salary?.placeSalaries ?: emptyList()
-        )*/
+            eventType = eventType
+
+        )
 }

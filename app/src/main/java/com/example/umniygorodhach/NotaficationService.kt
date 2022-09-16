@@ -11,14 +11,18 @@ import android.os.IBinder
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.ExperimentalTransitionApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.core.app.NotificationCompat
 import com.example.umniygorodhach.data.repository.NotafRepository
 import com.google.accompanist.pager.ExperimentalPagerApi
+import kotlinx.serialization.ExperimentalSerializationApi
 import java.time.LocalDateTime
 import javax.inject.Inject
 
 
+@ExperimentalSerializationApi
+@ExperimentalComposeUiApi
 @ExperimentalStdlibApi
 @ExperimentalMotionApi
 @ExperimentalMaterialApi

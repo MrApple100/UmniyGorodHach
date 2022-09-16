@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.core.os.bundleOf
 import com.example.umniygorodhach.R
 import kotlinx.parcelize.Parcelize
@@ -27,6 +28,8 @@ sealed class AppTab(
     object MyTeam: AppTab("myteam_tab", AppScreen.MyTeam.route, R.string.myteam, Icons.Default.Flag,)
     object Rules: AppTab("rules_tab", AppScreen.Rules.route,  R.string.rules, Icons.Default.Rule)
     object Help: AppTab("help_tab", AppScreen.Help.route, R.string.help, Icons.Default.Help)
+    object MyEvents: AppTab("myevents_tab", AppScreen.MyEvents.route, R.string.MyEvents, Icons.Default.Event)
+
 
     fun saveState() = bundleOf(SCREEN_KEY to route)
 
@@ -39,6 +42,7 @@ sealed class AppTab(
         MyTeam -> AppScreen.MyTeam
         Rules -> AppScreen.Rules
         Help -> AppScreen.Help
+        MyEvents -> AppScreen.MyEvents
     }
 
     companion object {
@@ -53,7 +57,8 @@ sealed class AppTab(
                 Profile,
                 MyTeam,
                 Rules,
-                Help
+                Help,
+                MyEvents
             )
 
 
@@ -71,6 +76,7 @@ sealed class AppTab(
             MyTeam.route -> MyTeam
             Rules.route -> Rules
             Help.route -> Help
+            MyEvents.route -> MyEvents
             else            -> {throw IllegalArgumentException("Invalid route. Maybe you forgot to add a new screen to AppTabSaver.kt?")}
         }
 
@@ -89,7 +95,13 @@ open class AppScreen(
     val route: String,
     val navLink: String = route.substringBefore("/{")
 ) : Parcelable {
+
+
+
     object Home : AppScreen(R.string.app_name,"home")
+
+
+
     object Health : AppScreen(R.string.app_name,"health")
     object News : AppScreen(R.string.app_name,"news")
     object PlaceEvent : AppScreen(R.string.app_name,"placeevent")
@@ -99,9 +111,17 @@ open class AppScreen(
     object Help : AppScreen(R.string.app_name,"help")
 
     object Raspisanie : AppScreen(R.string.app_name,"rasp")//has back button
+    object CreatePlayer : AppScreen(R.string.app_name,"createplayer")
+    object MyEvents : AppScreen(R.string.app_name,"myevents")
 
 
-
+    @Parcelize
+    class EventDetails(val title: String): AppScreen(R.string.eventDetail, "event/{eventId}") { // Has back button
+        companion object {
+            const val route = "event/{eventId}"
+            val navLink: String = route.substringBefore("/{")
+        }
+    }
     companion object {
         fun getAll(context: Context) = listOf(
             Home,
@@ -112,7 +132,10 @@ open class AppScreen(
             MyTeam,
             Rules,
             Help,
-            Raspisanie
+            Raspisanie,
+            MyEvents,
+            EventDetails(context.resources.getString(R.string.event)),
+            CreatePlayer
 
         )
     }

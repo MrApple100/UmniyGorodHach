@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Room
 import com.example.traininghakatonsever.common.ResponseHandler
 import com.example.umniygorodhach.BuildConfig
+import com.example.umniygorodhach.data.cachesqlite.database.PlayerDatabase
 import com.example.umniygorodhach.data.cachesqlite.database.TestDatabase
 import com.example.umniygorodhach.data.close.dao.TestDao
+import com.example.umniygorodhach.data.close.dao.player.PlayerDao
 import com.example.umniygorodhach.data.remote.api.events.EventsApi
 import com.example.umniygorodhach.data.remote.api.home.HomeApi
+import com.example.umniygorodhach.data.remote.api.myevents.MyEventsApi
 import com.example.umniygorodhach.data.remote.api.news.NewsApi
 import com.example.umniygorodhach.data.remote.api.news.ResultsApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -82,6 +85,14 @@ object ApiModule {
 
     @Singleton
     @Provides
+    fun providePLayerDatabase(@ApplicationContext appContext: Context): PlayerDatabase {
+        return Room
+            .databaseBuilder(appContext, PlayerDatabase::class.java, "players").allowMainThreadQueries()
+            .build()
+    }
+
+    @Singleton
+    @Provides
     fun provideResponseHandler() = ResponseHandler()
 
     @Singleton
@@ -95,5 +106,17 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideNewsApi(retrofit: Retrofit): NewsApi = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun provideMyEventsApi(retrofit: Retrofit): MyEventsApi = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun provideResultsApi(retrofit: Retrofit): ResultsApi = retrofit.create()
+
+    @Singleton
+    @Provides
+    fun providePlayerDao(playerDatabase: PlayerDatabase): PlayerDao = playerDatabase.playerDao()
 
 }

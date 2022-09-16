@@ -11,4 +11,26 @@
     <string name="at">в</string>
     <string name="time_parsing_error">error</string>
     <string name="results">Результаты</string>
+    <string name="more">Подробнее</string>
+    <string name="free">Бесплатно</string>
+    <string name="money">%1$d ₽</string>
+    <string name="choseplayer">Выбрать участников</string>
+
+    <string name="md_heading">Заголовок</string>
+    <string name="md_bold">Жирный</string>
+    <string name="md_italics">Курсив</string>
+    <string name="md_quote">Цитата</string>
+    <string name="md_code">Код</string>
+    <string name="md_link">Ссылка</string>
+    <string name="md_ul">Ненумерованный список</string>
+    <string name="md_ol">Нумерованный список</string>
+    <string name="md_task">Чекбокс</string>
+    <string name="md_attach">Прикрепить…</string>
+    <string name="lastname">Ф:</string>
+    <string name="firstname">И:</string>
+    <string name="middlename">О:</string>
+    <string name="age">Возраст</string>
+    <string name="MyEvents">Мои участия</string>
+    <string name="event">Событие</string>
+    <string name="eventDetail">%1$s</string>
 </resources>

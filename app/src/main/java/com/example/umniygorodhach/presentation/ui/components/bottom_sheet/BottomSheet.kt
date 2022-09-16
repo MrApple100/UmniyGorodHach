@@ -4,6 +4,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.ExperimentalTransitionApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.umniygorodhach.presentation.utils.AppBottomSheet
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.example.umniygorodhach.presentation.ui.components.markdown.MarkdownTextArea
 
 @ExperimentalTransitionApi
 @ExperimentalAnimationApi
@@ -57,13 +61,14 @@ fun BottomSheet(
 					salaries = shift.salaries,
 					eventViewModel = shift.eventViewModel
 				)
-			}
+			}*/
 			is AppBottomSheet.EventDescription -> {
 				MarkdownTextArea(
 					modifier = Modifier.verticalScroll(rememberScrollState()),
 					textMd = (currentSheet as AppBottomSheet.EventDescription).markdown
 				)
 			}
+			/*
 			is AppBottomSheet.ProfileSettings -> ProfileSettingsBottomSheet()
 			is AppBottomSheet.ProfileEvents -> {
 				val data = currentSheet as AppBottomSheet.ProfileEvents

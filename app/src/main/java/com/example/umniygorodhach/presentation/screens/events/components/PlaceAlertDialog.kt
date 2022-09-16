@@ -25,7 +25,7 @@ import ru.rtuitlab.itlab.R
 import ru.rtuitlab.itlab.data.remote.api.events.models.EventRole
 import com.example.umniygorodhach.Place
 import umniygorodhach.presentation.navigation.getLocalNavController
-import ru.rtuitlab.itlab.presentation.screens.events.EventViewModel
+import com.example.umniygorodhach.presentation.screens.events.EventViewModel
 import ru.rtuitlab.itlab.presentation.ui.components.*
 import com.example.umniygorodhach.AppColors
 
