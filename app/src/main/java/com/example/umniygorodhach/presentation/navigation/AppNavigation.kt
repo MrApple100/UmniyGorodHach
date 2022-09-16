@@ -1,7 +1,6 @@
 package com.example.umniygorodhach.presentation.navigation
 
 import android.content.res.Resources
-import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.ExperimentalTransitionApi
@@ -9,7 +8,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
+import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -30,7 +31,13 @@ import com.example.umniygorodhach.presentation.ui.components.shared_elements.Loc
 import com.example.umniygorodhach.presentation.ui.components.top_app_bars.AppBarViewModel
 import com.example.umniygorodhach.presentation.utils.AppScreen
 import com.example.umniygorodhach.presentation.utils.AppTab
+import com.example.umniygorodhach.presentation.utils.hiltViewModel
+import com.example.umniygorodhach.presentation.screens.events.Event
+import com.example.umniygorodhach.presentation.screens.myevents.MyEvents
+import com.example.umniygorodhach.presentation.screens.player.CreatePlayer
 
+@ExperimentalComposeUiApi
+@ExperimentalMotionApi
 @ExperimentalTransitionApi
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
@@ -82,6 +89,16 @@ fun AppNavigation(
 			resources,
 			appBarViewModel
 		)
+		playerGraph(
+			bottomSheetViewModel,
+			resources,
+			appBarViewModel
+		)
+		myEventsGraph(
+			bottomSheetViewModel,
+			resources,
+			appBarViewModel
+		)
 
 		/*employeesGraph(
 			bottomSheetViewModel
@@ -101,6 +118,8 @@ fun AppNavigation(
 }
 
 
+@ExperimentalComposeUiApi
+@ExperimentalMotionApi
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 private fun NavGraphBuilder.homeGraph(
@@ -120,8 +139,63 @@ private fun NavGraphBuilder.homeGraph(
 			Raspisanie(
 			)
 		}
+		composable(
+			route = AppScreen.EventDetails.route,
+			deepLinks = listOf(
+				navDeepLink {
+					uriPattern =
+						"https://${resources.getString(R.string.HOST_URI)}/events/{eventId}"
+				}
+			)
+		) {
+			Event(
+				id = it.arguments?.getString("eventId")!!,
+				eventViewModel = it.hiltViewModel()
+			)
+		}
 	}
 }
+
+@ExperimentalMotionApi
+@ExperimentalMaterialApi
+@ExperimentalPagerApi
+private fun NavGraphBuilder.playerGraph(
+	bottomSheetViewModel: BottomSheetViewModel,
+	resources: Resources,
+	appBarViewModel: AppBarViewModel
+) {
+
+	navigation(
+		startDestination = AppTab.MyTeam.startDestination,
+		route = AppTab.MyTeam.route
+	) {
+		composable(AppScreen.CreatePlayer.route) {
+			CreatePlayer(playerViewModel = it.hiltViewModel())
+		}
+
+	}
+}
+@ExperimentalMotionApi
+@ExperimentalMaterialApi
+@ExperimentalPagerApi
+private fun NavGraphBuilder.myEventsGraph(
+	bottomSheetViewModel: BottomSheetViewModel,
+	resources: Resources,
+	appBarViewModel: AppBarViewModel
+) {
+
+	navigation(
+		startDestination = AppTab.MyEvents.startDestination,
+		route = AppTab.MyEvents.route
+	) {
+		composable(AppScreen.MyEvents.route) {
+			MyEvents(myeventsViewModel = it.hiltViewModel())
+		}
+
+	}
+}
+
+
 
 
 @ExperimentalAnimationApi

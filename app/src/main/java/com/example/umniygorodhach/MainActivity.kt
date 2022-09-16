@@ -16,6 +16,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.core.app.NotificationCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -29,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.ExperimentalSerializationApi
 
 
+@ExperimentalComposeUiApi
 @ExperimentalSerializationApi
 @ExperimentalPagerApi
 @ExperimentalAnimationApi
@@ -43,10 +45,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        notificationManager = this.getSystemService( NOTIFICATION_SERVICE) as NotificationManager;
         installSplashScreen()
-        sendNotification("Ticker","Приветственное уведомление","привет");
-
         setContent {
            // val authState by authViewModel.authStateFlow.collectAsState(null)
             UmniyGorodTheme(){

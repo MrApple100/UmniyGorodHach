@@ -46,12 +46,12 @@ fun HomeTopAppBar(
 
 		ExtendedTopAppBar(
 			options = listOf(
-				AppBarOption.Clickable(
+				/*AppBarOption.Clickable(
 					icon = Icons.Default.Search,
 					onClick = {
 						searchActivated.value = true
 					}
-				)
+				)*/
 			),
 			hideBackButton = !searchActivated.value,
 			hideOptions = searchActivated.value,
@@ -66,7 +66,7 @@ fun HomeTopAppBar(
 
 
 					Text(
-						text = stringResource(R.string.news),
+						text = stringResource(R.string.home),
 						fontSize = 20.sp,
 						fontWeight = FontWeight(500),
 						textAlign = TextAlign.Start,

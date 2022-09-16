@@ -24,7 +24,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import ru.rtuitlab.itlab.R
 import com.example.umniygorodhach.Place
 import com.example.umniygorodhach.Shift
-import ru.rtuitlab.itlab.presentation.screens.events.EventViewModel
+import com.example.umniygorodhach.presentation.screens.events.EventViewModel
 import ru.rtuitlab.itlab.presentation.screens.profile.ProfileViewModel
 import ru.rtuitlab.itlab.presentation.ui.components.IconizedRow
 import ru.rtuitlab.itlab.presentation.ui.components.ImagePosition

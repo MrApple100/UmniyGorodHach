@@ -1,6 +1,12 @@
 package com.example.umniygorodhach.data.remote.api.events
 
+import com.example.umniygorodhach.data.close.dao.player.PlayerEntity
+import com.example.umniygorodhach.data.remote.api.events.models.EventDetailDto
+import com.example.umniygorodhach.data.remote.api.events.models.EventRegistratePLayers
+import retrofit2.http.*
+
 interface EventsApi {
+
 /*
 
 	@GET("Event")
@@ -15,13 +21,23 @@ interface EventsApi {
 		@Query("begin") begin: String? = null,
 		@Query("end") end: String? = null
 	): List<UserEventModel>
+*/
+
+	@GET("Event")
+	suspend fun getEvents() : EventDetailDto
 
 	@GET("Event/{eventId}")
 	suspend fun getEvent(
 		@Path("eventId") eventId: String
 	) : EventDetailDto
 
-	@GET("salary/v1/event/{eventId}")
+	@POST("Event/{eventId}")
+	suspend fun registratePlayers(
+		@Body  eventRegistratePLayers: EventRegistratePLayers
+	):EventDetailDto
+}
+
+	/*@GET("salary/v1/event/{eventId}")
 	suspend fun getEventSalary(
 		@Path("eventId") eventId: String
 	) : EventSalary
@@ -47,5 +63,5 @@ interface EventsApi {
 
 	@GET("eventRole")
 	suspend fun getEventRoles() : List<EventRoleModel>
-*/
-}
+
+}*/

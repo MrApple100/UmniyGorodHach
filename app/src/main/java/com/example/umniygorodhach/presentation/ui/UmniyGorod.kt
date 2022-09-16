@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -39,12 +40,15 @@ import com.example.umniygorodhach.presentation.screens.events.components.EventsT
 import com.example.umniygorodhach.presentation.screens.home.HomeViewModel
 import com.example.umniygorodhach.presentation.screens.home.components.HomeTopAppBar
 import com.example.umniygorodhach.presentation.screens.home.components.RaspisanieTopAppBar
+import com.example.umniygorodhach.presentation.screens.myteam.components.MyEventsTopAppBar
 import com.example.umniygorodhach.presentation.screens.news.components.NewsTopAppBar
+import com.example.umniygorodhach.presentation.screens.player.components.CreatePlayerTopAppBar
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheet
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheetViewModel
 
 import com.example.umniygorodhach.presentation.utils.singletonViewModel
 
+@ExperimentalComposeUiApi
 @ExperimentalSerializationApi
 @ExperimentalStdlibApi
 @ExperimentalMotionApi
@@ -93,6 +97,17 @@ fun UmniyGorodApp(
                     AppScreen.Home -> HomeTopAppBar()
                     AppScreen.News -> NewsTopAppBar()
                     AppScreen.Raspisanie -> RaspisanieTopAppBar(onBackAction)
+                    AppScreen.CreatePlayer -> CreatePlayerTopAppBar(onBackAction)
+                    is AppScreen.EventDetails -> BasicTopAppBar(
+                        text = stringResource(
+                            currentScreen.screenNameResource,
+                            (currentScreen as AppScreen.EventDetails).title
+                        ),
+                        onBackAction = onBackAction
+                    )
+                    AppScreen.MyEvents -> MyEventsTopAppBar()
+
+
 
                     /*is AppScreen.EventDetails -> BasicTopAppBar(
                         text = stringResource(
