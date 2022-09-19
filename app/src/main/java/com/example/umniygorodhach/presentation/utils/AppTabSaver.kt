@@ -21,13 +21,13 @@ sealed class AppTab(
     var accessible: Boolean = true
 ) {
     object Home: AppTab("home_tab", AppScreen.Home.route, R.string.home, Icons.Default.Home)
-    object Health: AppTab("health_tab", AppScreen.Health.route, R.string.health, Icons.Default.HealthAndSafety)
+    object Health: AppTab("health_tab", AppScreen.Health.route, R.string.health, Icons.Default.HealthAndSafety,false)
     object News: AppTab("news_tab", AppScreen.News.route, R.string.news, Icons.Default.Newspaper,)
-    object PlaceEvent: AppTab("placeevent_tab", AppScreen.PlaceEvent.route,  R.string.placeevent, Icons.Default.Place,)
-    object Profile: AppTab("profile_tab", AppScreen.Profile.route, R.string.profile, Icons.Default.People,)
+    object PlaceEvent: AppTab("placeevent_tab", AppScreen.PlaceEvent.route,  R.string.placeevent, Icons.Default.Place,false)
+    object Profile: AppTab("profile_tab", AppScreen.Profile.route, R.string.profile, Icons.Default.People,false)
     object MyTeam: AppTab("myteam_tab", AppScreen.MyTeam.route, R.string.myteam, Icons.Default.Flag,)
-    object Rules: AppTab("rules_tab", AppScreen.Rules.route,  R.string.rules, Icons.Default.Rule)
-    object Help: AppTab("help_tab", AppScreen.Help.route, R.string.help, Icons.Default.Help)
+    object Rules: AppTab("rules_tab", AppScreen.Rules.route,  R.string.rules, Icons.Default.Rule,false)
+    object Help: AppTab("help_tab", AppScreen.Help.route, R.string.help, Icons.Default.Help,false)
     object MyEvents: AppTab("myevents_tab", AppScreen.MyEvents.route, R.string.MyEvents, Icons.Default.Event)
 
 
@@ -99,8 +99,6 @@ open class AppScreen(
 
 
     object Home : AppScreen(R.string.app_name,"home")
-
-
 
     object Health : AppScreen(R.string.app_name,"health")
     object News : AppScreen(R.string.app_name,"news")

@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import com.example.traininghakatonsever.common.ResponseHandler
 import com.example.umniygorodhach.BuildConfig
+import com.example.umniygorodhach.data.cachesqlite.database.MyEventDatabase
 import com.example.umniygorodhach.data.cachesqlite.database.PlayerDatabase
 import com.example.umniygorodhach.data.cachesqlite.database.TestDatabase
 import com.example.umniygorodhach.data.close.dao.TestDao
+import com.example.umniygorodhach.data.close.dao.myevent.MyEventsDao
 import com.example.umniygorodhach.data.close.dao.player.PlayerDao
 import com.example.umniygorodhach.data.remote.api.events.EventsApi
 import com.example.umniygorodhach.data.remote.api.home.HomeApi
@@ -90,6 +92,13 @@ object ApiModule {
             .databaseBuilder(appContext, PlayerDatabase::class.java, "players").allowMainThreadQueries()
             .build()
     }
+    @Singleton
+    @Provides
+    fun provideMyEventDatabase(@ApplicationContext appContext: Context): MyEventDatabase {
+        return Room
+            .databaseBuilder(appContext, MyEventDatabase::class.java, "myevent").allowMainThreadQueries()
+            .build()
+    }
 
     @Singleton
     @Provides
@@ -119,4 +128,7 @@ object ApiModule {
     @Provides
     fun providePlayerDao(playerDatabase: PlayerDatabase): PlayerDao = playerDatabase.playerDao()
 
+    @Singleton
+    @Provides
+    fun provideMyEventDao(myeventDatabase: MyEventDatabase): MyEventsDao = myeventDatabase.myeventDao()
 }

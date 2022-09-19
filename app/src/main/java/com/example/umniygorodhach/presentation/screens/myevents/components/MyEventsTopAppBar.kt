@@ -1,4 +1,4 @@
-package com.example.umniygorodhach.presentation.screens.myteam.components
+package com.example.umniygorodhach.presentation.screens.myevents.components
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column

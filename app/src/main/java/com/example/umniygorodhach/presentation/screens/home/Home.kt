@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.example.umniygorodhach.R
 import com.example.umniygorodhach.presentation.navigation.LocalNavController
 import com.example.umniygorodhach.presentation.screens.events.EventViewModel
+import com.example.umniygorodhach.presentation.screens.myevents.MyEventsViewModel
 import com.example.umniygorodhach.presentation.ui.components.ButtonLoadingIndicator
 import com.example.umniygorodhach.presentation.ui.components.LoadingError
 import com.example.umniygorodhach.presentation.ui.components.shared_elements.SharedElement
@@ -38,7 +39,7 @@ val duration = 300
 @Composable
 fun Home(
     homeViewModel: HomeViewModel = singletonViewModel(),
-    eventsViewModel: EventViewModel = singletonViewModel()
+    eventsViewModel: EventViewModel = singletonViewModel(),
 ) {
     var isRefreshing = remember { mutableStateOf(false) }
     val raspResource = homeViewModel.raspResponsesFlow.collectAsState().value
@@ -95,133 +96,58 @@ fun Home(
                 )
 
             }
-            (raspResource).handle(
-                onLoading = {
-                    isRefreshing.value = true
-                },
-                onError = { msg ->
-                    isRefreshing.value = false
-                   // LoadingError(msg = msg)
-                },
-                onSuccess = {regionlist ->
-                    isRefreshing.value = false
-                    homeViewModel.onResourceSuccess(regionlist)
-            Card(modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    navController.navigate(AppScreen.Raspisanie.navLink)
+            Column(
 
-                }) {
-                Column() {
-
+            ) {
                     Text(
                         modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Left,
                         text = "Мое расписание"
                     )
-                    Row(modifier = Modifier.padding(10.dp)) {
-                        Row(
-                            modifier = Modifier
+
+
+                    (raspResource).handle(
+                        onLoading = {
+                            isRefreshing.value = true
+                        },
+                        onError = { msg ->
+                            isRefreshing.value = false
+                            // LoadingError(msg = msg)
+                        },
+                        onSuccess = { regionlist ->
+                            isRefreshing.value = false
+                            homeViewModel.onResourceSuccess(regionlist)
+                            Card(modifier = Modifier
                                 .fillMaxWidth()
-                                .weight(1f, false),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(text = "Время", textAlign = TextAlign.Center)
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(4f, false),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(text = "Занятие", textAlign = TextAlign.Center)
-                        }
-                    }
-                    LazyColumn() {
-                        items(rasp) { item ->
-                            Row(modifier = Modifier.padding(10.dp)) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(1f, false),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Text(
-                                        text = "00" + ":" + "00",
-                                        textAlign = TextAlign.Center
-                                    )
-                                }
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(4f, false),
-                                    horizontalArrangement = Arrangement.Center
-                                ) {
-                                    Text(text = item.title, textAlign = TextAlign.Center)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            })
-            (eventsResource).handle(
-                onLoading = {
-                    isRefreshing.value = true
-                },
-                onError = { msg ->
-                    isRefreshing.value = false
-                    LoadingError(msg = msg)
-                },
-                onSuccess = {eventslist ->
-                    isRefreshing.value = false
-                    eventsViewModel.onResourceSuccess(eventslist)
-                    /*Card(modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                           // navController.navigate(AppScreen.Raspisanie.navLink)
+                                .clickable {
+                                    navController.navigate(AppScreen.Raspisanie.navLink)
 
-                        }) {*/
-                        Column() {
+                                }) {
+                                Column() {
 
-                            Text(
-                                modifier = Modifier
-                                    .padding(10.dp)
-                                    .fillMaxWidth(),
-                                textAlign = TextAlign.Right,
-                                text = "Ближайшие мероприятия"
-                            )
-
-                            LazyColumn() {
-                                items(events) { event ->
-                                    SharedElement(
-                                        key = event.id,
-                                        screenKey = AppScreen.Home.route,
-                                        transitionSpec = SharedElementsTransitionSpec(
-                                            durationMillis = duration
-                                        )
-                                    ) {
-                                        Card(modifier = Modifier
-                                            .fillMaxWidth()
-                                            .clickable {
-                                                navController.navigate("${AppScreen.EventDetails.navLink}/${event.id}")
-
-                                            }) {
+                                    Row(modifier = Modifier.padding(10.dp)) {
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .weight(1f, false),
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Text(text = "Время", textAlign = TextAlign.Center)
+                                        }
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .weight(4f, false),
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Text(text = "Занятие", textAlign = TextAlign.Center)
+                                        }
+                                    }
+                                    LazyColumn() {
+                                        items(rasp) { item ->
                                             Row(modifier = Modifier.padding(10.dp)) {
-
-                                                Row(
-                                                    modifier = Modifier
-                                                        .fillMaxWidth()
-                                                        .weight(4f, false),
-                                                    horizontalArrangement = Arrangement.Center
-                                                ) {
-                                                    Text(
-                                                        text = event.title,
-                                                        textAlign = TextAlign.Center
-                                                    )
-                                                }
                                                 Row(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
@@ -233,15 +159,102 @@ fun Home(
                                                         textAlign = TextAlign.Center
                                                     )
                                                 }
+                                                Row(
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .weight(4f, false),
+                                                    horizontalArrangement = Arrangement.Center
+                                                ) {
+                                                    Text(
+                                                        text = item.title,
+                                                        textAlign = TextAlign.Center
+                                                    )
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                   // }
-                })
+                        })
+
+                    (eventsResource).handle(
+                        onLoading = {
+                            isRefreshing.value = true
+                        },
+                        onError = { msg ->
+                            isRefreshing.value = false
+                            LoadingError(msg = msg)
+                        },
+                        onSuccess = { eventslist ->
+                            isRefreshing.value = false
+                            eventsViewModel.onResourceSuccess(eventslist)
+                            /*Card(modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                           // navController.navigate(AppScreen.Raspisanie.navLink)
+
+                        }) {*/
+                            Column() {
+
+                                Text(
+                                    modifier = Modifier
+                                        .padding(10.dp)
+                                        .fillMaxWidth(),
+                                    textAlign = TextAlign.Left,
+                                    text = "Ближайшие мероприятия"
+                                )
+
+                                LazyColumn() {
+                                    items(events) { event ->
+                                        SharedElement(
+                                            key = event.id,
+                                            screenKey = AppScreen.Home.route,
+                                            transitionSpec = SharedElementsTransitionSpec(
+                                                durationMillis = duration
+                                            )
+                                        ) {
+                                            Card(modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    navController.navigate("${AppScreen.EventDetails.navLink}/${event.id}")
+
+                                                }) {
+                                                Row(modifier = Modifier.padding(10.dp)) {
+
+                                                    Row(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth()
+                                                            .weight(4f, false),
+                                                        horizontalArrangement = Arrangement.Center
+                                                    ) {
+                                                        Text(
+                                                            text = event.title,
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    }
+                                                    Row(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth()
+                                                            .weight(1f, false),
+                                                        horizontalArrangement = Arrangement.Center
+                                                    ) {
+                                                        Text(
+                                                            text = "00" + ":" + "00",
+                                                            textAlign = TextAlign.Center
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // }
+                        })
+
+            }
 
         }
+
     }
 }

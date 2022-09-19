@@ -123,7 +123,7 @@ fun NewsItemCard(
 						.fillMaxWidth()
 						.height(200.dp),
 					model = ImageRequest.Builder(LocalContext.current)
-						.data(BuildConfig.API_URI+"/news/"+newsItem.picture)
+						.data(/*BuildConfig.API_URI+"/news/"+*/newsItem.picture)
 						.crossfade(true)
 						.build(),
 					placeholder = painterResource(R.drawable.ic_wheel),

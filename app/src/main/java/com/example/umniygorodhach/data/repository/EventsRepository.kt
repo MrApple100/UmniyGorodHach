@@ -16,29 +16,17 @@ class EventsRepository @Inject constructor(
 ) {
     //Mock Data
     val eventDetailDto = EventDetailDto(
-        "0","Первое","Description","1644444444444","1644454444444","Moscow, Вернадксого 78",0,0,3,"Экскурсия","https://i.pinimg.com/originals/14/9b/25/149b25e8f29d2042da36563bf729553e.jpg"
+        "1","Занятие по игре на Скрипке","Первое занятие на скрипке. Могут посетить все желающие","2022-21-09-17-50-00","2022-21-09-19-00-00","Moscow, Вернадксого 78",0,3,10,"Музыка","https://i.pinimg.com/originals/14/9b/25/149b25e8f29d2042da36563bf729553e.jpg"
     )
-    val listEvent = arrayListOf<EventDetailDto>(eventDetailDto,eventDetailDto,eventDetailDto,eventDetailDto,eventDetailDto)
+    val eventDetailDto2 = EventDetailDto(
+        "2","Приезжает Лепс","Можно сходить на лепса","1644464444444","1644474444444","Moscow, Крокус холл",2000,1443,11000,"Концерт","https://i.pinimg.com/originals/14/9b/25/149b25e8f29d2042da36563bf729553e.jpg"
+    )
+    val eventDetailDto3 = EventDetailDto(
+        "3","Киргизские танцы","Волонтеры устраивают сходку","1644484444444","1644494444444","Moscow, Метро Охотный Ряд",1000,13,100,"Танцы","https://i.pinimg.com/originals/14/9b/25/149b25e8f29d2042da36563bf729553e.jpg"
+    )
+    val listEvent = arrayListOf<EventDetailDto>(eventDetailDto,eventDetailDto2,eventDetailDto3)
 
-	/*suspend fun fetchPendingEvents() = handler {
-		val now = nowAsIso8601()
-		eventsApi.getEvents(begin = now)
-	}*/
 
-	/*suspend fun fetchAllEvents(
-		begin: String? = null,
-		end: String? = null
-	) = handler {
-		eventsApi.getEvents(begin, end)
-	}
-
-	suspend fun fetchUserEvents(
-		userId: String,
-		begin: String? = null,
-		end: String? = null
-	) = handler {
-		eventsApi.getUserEvents(userId, begin, end)
-	}*/
 
 	suspend fun fetchEvent() = handler {
 	    listEvent as MutableList<EventDetailDto>
@@ -50,26 +38,5 @@ class EventsRepository @Inject constructor(
         eventsApi.registratePlayers(eventRegistratePlayers)
     }
 
-    /*suspend fun fetchEventSalary(eventId: String) = handler {
-        eventsApi.getEventSalary(eventId)
-    }
 
-    suspend fun applyForPlace(placeId: String, roleId: String) = handler {
-        eventsApi.applyForPlace(placeId, roleId)
-    }
-
-    suspend fun fetchEventRoles() = handler {
-        eventsApi.getEventRoles()
-    }
-
-    suspend fun fetchInvitations() = handler {
-        eventsApi.getInvitations()
-    }
-
-    suspend fun rejectInvitation(placeId: String) = handler {
-        eventsApi.rejectInvitation(placeId)
-    }
-    suspend fun acceptInvitation(placeId: String) = handler {
-        eventsApi.acceptInvitation(placeId)
-    }*/
 }

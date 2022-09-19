@@ -33,4 +33,6 @@
     <string name="MyEvents">Мои участия</string>
     <string name="event">Событие</string>
     <string name="eventDetail">%1$s</string>
+    <string name="MyTeam">Моя команда</string>
+    <string name="players">Участники</string>
 </resources>

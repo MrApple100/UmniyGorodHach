@@ -404,7 +404,7 @@ fun News(
                             startActivity(context, browserIntent, null)
                         },
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(BuildConfig.API_URI + "/broadcast/" + trans.picture)
+                        .data(/*BuildConfig.API_URI + "/broadcast/" + */trans.picture)
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.ic_wheel),

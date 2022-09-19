@@ -33,6 +33,7 @@ import com.example.umniygorodhach.R
 import com.example.umniygorodhach.data.close.dao.player.PlayerEntity
 import com.example.umniygorodhach.data.remote.api.events.models.EventDetail
 import com.example.umniygorodhach.presentation.navigation.LocalNavController
+import com.example.umniygorodhach.presentation.screens.myevents.MyEventsViewModel
 import com.example.umniygorodhach.presentation.screens.player.PlayerViewModel
 import com.example.umniygorodhach.presentation.ui.components.IconizedRow
 import com.example.umniygorodhach.presentation.ui.components.InteractiveField
@@ -60,6 +61,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun Event(
 	id:String,
     eventViewModel: EventViewModel = singletonViewModel(),
+	myeventsViewModel: MyEventsViewModel = singletonViewModel(),
 	playerViewModel: PlayerViewModel = singletonViewModel(),
     bottomSheetViewModel: BottomSheetViewModel = singletonViewModel(),
     appBarViewModel: AppBarViewModel = singletonViewModel(),
@@ -110,6 +112,7 @@ fun Event(
 					EventInfoWithList(
 						event =  thisEvent.toEvent(),
 						eventViewModel = eventViewModel,
+						myeventsViewModel = myeventsViewModel,
 						playerViewModel = playerViewModel,
 						bottomSheetViewModel = bottomSheetViewModel
 					)
@@ -126,6 +129,7 @@ fun Event(
 private fun EventInfoWithList(
 	event: EventDetail,
 	eventViewModel: EventViewModel,
+	myeventsViewModel: MyEventsViewModel,
 	playerViewModel: PlayerViewModel,
 	bottomSheetViewModel: BottomSheetViewModel
 ) {
@@ -326,6 +330,7 @@ private fun ChosePlayers(
 	event: EventDetail,
 	playerViewModel: PlayerViewModel,
 	eventViewModel: EventViewModel,
+	myeventsViewModel: MyEventsViewModel = singletonViewModel(),
 	bottomSheetViewModel: BottomSheetViewModel) {
 	val players = playerViewModel.playerFlow.collectAsState().value
 
@@ -350,13 +355,16 @@ private fun ChosePlayers(
 			modifier = Modifier
 				.fillMaxWidth(),
 			onClick = {
-				eventViewModel.registratePlayers(
-					event.id,
-					chosenPlayers.value as List<PlayerEntity>
-				) { isSuccess ->
-					if (isSuccess) {
-						navController.navigate("${AppScreen.MyEvents.navLink}")
+				if(chosenPlayers.value.size>0) {
+					myeventsViewModel.insertEventToMyEvent(event,chosenPlayers.value as List<PlayerEntity>)
 
+					eventViewModel.registratePlayers(
+						event.id,
+						chosenPlayers.value as List<PlayerEntity>
+					) { isSuccess ->
+						if (isSuccess) {
+							navController.navigate("${AppScreen.MyEvents.navLink}")
+						}
 					}
 				}
 			}
@@ -418,9 +426,7 @@ private fun ChosePlayers(
 					items = players,
 
 					) { player ->
-					Log.d("Players", players.size.toString())
 
-					Log.d("Players", player.toString())
 
 					Card(
 						modifier = Modifier

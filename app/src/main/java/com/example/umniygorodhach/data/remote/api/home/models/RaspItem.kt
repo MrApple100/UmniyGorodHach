@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RaspItem(
-    var id:Int,
-    var id_user:Int,
+    var id:String,
+    var id_user:String,
     var title:String,
-    var time:Int,
+    var time:String,
     var text:String
 )

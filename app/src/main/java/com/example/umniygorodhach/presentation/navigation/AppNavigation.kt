@@ -34,6 +34,7 @@ import com.example.umniygorodhach.presentation.utils.AppTab
 import com.example.umniygorodhach.presentation.utils.hiltViewModel
 import com.example.umniygorodhach.presentation.screens.events.Event
 import com.example.umniygorodhach.presentation.screens.myevents.MyEvents
+import com.example.umniygorodhach.presentation.screens.myteam.MyTeam
 import com.example.umniygorodhach.presentation.screens.player.CreatePlayer
 
 @ExperimentalComposeUiApi
@@ -171,6 +172,9 @@ private fun NavGraphBuilder.playerGraph(
 	) {
 		composable(AppScreen.CreatePlayer.route) {
 			CreatePlayer(playerViewModel = it.hiltViewModel())
+		}
+		composable(AppScreen.MyTeam.route) {
+			MyTeam(playerViewModel = it.hiltViewModel())
 		}
 
 	}

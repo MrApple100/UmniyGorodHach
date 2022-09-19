@@ -1,11 +1,14 @@
 package com.example.umniygorodhach.data.remote.api.myevents
 
-import com.example.umniygorodhach.data.remote.api.events.models.EventDetailDto
+import androidx.room.Dao
+import androidx.room.Query
+import com.example.umniygorodhach.data.close.dao.myevent.MyEventEntity
 import retrofit2.http.GET
 
+@Dao
 interface MyEventsApi {
 
-    @GET("MyEvent")
-    suspend fun getMyEvents() : EventDetailDto
+    @Query("SELECT * FROM myevent ")
+    suspend fun getMyEvents() : MyEventEntity
 
 }

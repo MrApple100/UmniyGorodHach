@@ -1,5 +1,7 @@
 package com.example.umniygorodhach.data.remote.api.events.models
 
+import com.example.umniygorodhach.data.close.dao.myevent.MyEventEntity
+
 
 data class EventDetail(
     val id: String,
@@ -11,7 +13,25 @@ data class EventDetail(
     val currentParticipationCount: Int,
     val targetParticipationCount: Int,
     val description: String,
-    val eventType : String
+    val eventType : String,
+    val picture :String
 
 
-    )
+    ){
+    fun toMyEventEntity() =
+        MyEventEntity(
+            id = id,
+            title = title,
+            beginTime = beginTime,
+            endTime = endTime,
+            money = money,
+            address = address,
+            currentParticipationCount = currentParticipationCount,
+            targetParticipationCount = targetParticipationCount,
+            description = description,
+            eventType = eventType,
+            picture = picture,
+            listPlayer = emptyList()
+
+        )
+}

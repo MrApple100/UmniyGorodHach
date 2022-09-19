@@ -36,11 +36,11 @@ import com.example.umniygorodhach.presentation.utils.AppScreen
 import com.example.umniygorodhach.presentation.utils.AppTab
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
-import com.example.umniygorodhach.presentation.screens.events.components.EventsTopAppBar
 import com.example.umniygorodhach.presentation.screens.home.HomeViewModel
 import com.example.umniygorodhach.presentation.screens.home.components.HomeTopAppBar
 import com.example.umniygorodhach.presentation.screens.home.components.RaspisanieTopAppBar
-import com.example.umniygorodhach.presentation.screens.myteam.components.MyEventsTopAppBar
+import com.example.umniygorodhach.presentation.screens.myevents.components.MyEventsTopAppBar
+import com.example.umniygorodhach.presentation.screens.myteam.components.MyTeamTopAppBar
 import com.example.umniygorodhach.presentation.screens.news.components.NewsTopAppBar
 import com.example.umniygorodhach.presentation.screens.player.components.CreatePlayerTopAppBar
 import com.example.umniygorodhach.presentation.ui.components.bottom_sheet.BottomSheet
@@ -106,6 +106,7 @@ fun UmniyGorodApp(
                         onBackAction = onBackAction
                     )
                     AppScreen.MyEvents -> MyEventsTopAppBar()
+                    AppScreen.MyTeam -> MyTeamTopAppBar()
 
 
 

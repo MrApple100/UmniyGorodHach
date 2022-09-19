@@ -74,7 +74,7 @@ fun Raspisanie(
                             ) {
                                 Column() {
                                 Text(text = item.title, textAlign = TextAlign.Center)
-                                Text(text = item.title, textAlign = TextAlign.Center)
+                                Text(text = item.text, textAlign = TextAlign.Center)
                                 }
                             }
 
