@@ -1,6 +1,8 @@
 package com.example.umniygorodhach.presentation.screens.myteam
 
 import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,12 +14,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.umniygorodhach.R
@@ -26,6 +31,7 @@ import com.example.umniygorodhach.presentation.screens.player.PlayerViewModel
 import com.example.umniygorodhach.presentation.ui.components.LoadingError
 import com.example.umniygorodhach.presentation.ui.components.LoadingIndicator
 import com.example.umniygorodhach.presentation.ui.theme.AppColors
+import com.example.umniygorodhach.presentation.utils.AppBottomSheet
 import com.example.umniygorodhach.presentation.utils.AppScreen
 import com.example.umniygorodhach.presentation.utils.singletonViewModel
 
@@ -98,6 +104,36 @@ fun MyTeam(
                         elevation = 2.dp,
                         shape = RoundedCornerShape(5.dp)
                     ) {
+                            Row(
+                                horizontalArrangement = Arrangement.End,
+                                verticalAlignment = Alignment.Top,
+                                modifier = Modifier
+                                    .fillMaxSize()
+
+
+                            ) {
+
+
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = stringResource(R.string.delete),
+                                        tint = colorResource(R.color.accent),
+                                        modifier = Modifier
+                                            .padding(10.dp)
+                                            .width(16.dp)
+                                            .height(16.dp)
+                                            .padding(0.dp)
+                                            .clickable {
+                                                playerViewModel.onDeletePlayer(player){
+                                                    playerViewModel.onRefresh()
+                                                }
+                                                //navController.navigate(AppScreen.DeviceDetails.route)
+
+                                            }
+
+
+                                    )
+                                }
                         Column(
                             modifier = Modifier
                                 .padding(15.dp)

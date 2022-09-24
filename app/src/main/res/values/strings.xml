@@ -35,4 +35,5 @@
     <string name="eventDetail">%1$s</string>
     <string name="MyTeam">Моя команда</string>
     <string name="players">Участники</string>
+    <string name="delete">Удалить</string>
 </resources>

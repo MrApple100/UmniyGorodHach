@@ -151,7 +151,8 @@ private fun NavGraphBuilder.homeGraph(
 		) {
 			Event(
 				id = it.arguments?.getString("eventId")!!,
-				eventViewModel = it.hiltViewModel()
+				eventViewModel = it.hiltViewModel(),
+				myeventsViewModel = it.hiltViewModel()
 			)
 		}
 	}
@@ -193,7 +194,8 @@ private fun NavGraphBuilder.myEventsGraph(
 		route = AppTab.MyEvents.route
 	) {
 		composable(AppScreen.MyEvents.route) {
-			MyEvents(myeventsViewModel = it.hiltViewModel())
+			MyEvents(myeventsViewModel = it.hiltViewModel()
+			, eventsViewModel = it.hiltViewModel())
 		}
 
 	}

@@ -1,6 +1,7 @@
 package com.example.umniygorodhach.presentation.screens.myevents
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,12 +10,16 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,18 +32,21 @@ import com.example.umniygorodhach.presentation.screens.home.duration
 import com.example.umniygorodhach.presentation.ui.components.LoadingError
 import com.example.umniygorodhach.presentation.ui.components.shared_elements.SharedElement
 import com.example.umniygorodhach.presentation.ui.components.shared_elements.utils.SharedElementsTransitionSpec
+import com.example.umniygorodhach.presentation.utils.AppBottomSheet
 import com.example.umniygorodhach.presentation.utils.AppScreen
 import com.example.umniygorodhach.presentation.utils.singletonViewModel
 
 @Composable
 fun MyEvents(
-    myeventsViewModel:MyEventsViewModel = singletonViewModel()
+    myeventsViewModel:MyEventsViewModel = singletonViewModel(),
+    eventsViewModel: MyEventsViewModel = singletonViewModel()
 ){
     var isRefreshing = remember { mutableStateOf(false) }
     val eventsResource = myeventsViewModel.eventsResponsesFlow.collectAsState().value
     val events = myeventsViewModel.eventsFlow.collectAsState().value
 
     val navController = LocalNavController.current
+    val baseeventsResource = eventsViewModel.eventsResponsesFlow.collectAsState().value
 
 
 
@@ -59,6 +67,16 @@ fun MyEvents(
                    // navController.navigate(AppScreen.Raspisanie.navLink)
 
                 }) {*/
+            (baseeventsResource).handle(
+                onLoading = {
+                    isRefreshing.value = true
+                },
+                onError = { msg ->
+                    isRefreshing.value = false
+                    LoadingError(msg = msg)
+                },
+                onSuccess = {baseeventsResource ->
+                    isRefreshing.value = false
             Column() {
 
                /* Text(
@@ -86,34 +104,64 @@ fun MyEvents(
                                     expandedDeviceCardbool.value = !expandedDeviceCardbool.value
 
                                 }) {
-                                Column(){
-                                Row(modifier = Modifier.padding(10.dp)) {
+                                Column() {
+                                    Row(modifier = Modifier.padding(10.dp)) {
 
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .weight(4f, false),
-                                        horizontalArrangement = Arrangement.Center
-                                    ) {
-                                        Text(
-                                            text = event.title,
-                                            textAlign = TextAlign.Center
-                                        )
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .weight(4f, false),
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Text(
+                                                text = event.title,
+                                                textAlign = TextAlign.Center
+                                            )
+                                        }
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .weight(1f, false),
+                                            horizontalArrangement = Arrangement.Center
+                                        ) {
+                                            Text(
+                                                text = "00" + ":" + "00",
+                                                textAlign = TextAlign.Center
+                                            )
+                                        }
                                     }
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .weight(1f, false),
-                                        horizontalArrangement = Arrangement.Center
-                                    ) {
-                                        Text(
-                                            text = "00" + ":" + "00",
-                                            textAlign = TextAlign.Center
-                                        )
-                                    }
-                                }
                                     AnimatedVisibility(expandedDeviceCardbool.value) {
                                         Spacer(Modifier.height(10.dp))
+                                    }
+                                    AnimatedVisibility(expandedDeviceCardbool.value) {
+                                        Row(
+                                            horizontalArrangement = Arrangement.End,
+                                            verticalAlignment = Alignment.Top,
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                            /*.animateEnterExit(exit = shrinkVertically())*/
+
+                                        ) {
+
+                                            Text(
+                                                modifier = Modifier
+                                                    /*.padding(10.dp)
+                                                        .width(16.dp)
+                                                        .height(16.dp)
+                                                        .padding(0.dp)*/
+                                                    .clickable {
+                                                        if (baseeventsResource.find { it -> it.id == event.id } != null) {
+
+                                                            navController.navigate("${AppScreen.EventDetails.navLink}/${event.id}")
+                                                        }
+                                                    },
+                                                text = stringResource(R.string.more)
+
+
+                                            )
+
+
+                                        }
                                     }
                                     AnimatedVisibility(expandedDeviceCardbool.value) {
                                         Column() {
@@ -141,12 +189,12 @@ fun MyEvents(
                                     }
                                 }
 
-
+                            }
                             }
                         }
                     }
                 }
-            }
+            })
             // }
         })
 }

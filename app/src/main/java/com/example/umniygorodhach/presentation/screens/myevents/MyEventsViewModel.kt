@@ -79,6 +79,23 @@ class MyEventsViewModel @Inject constructor(
                     )
         }
 
+    fun deleteEventfromMyEvent(event: MyEventEntity,onFinish: (Boolean) ->Unit) = viewModelScope.launch {
+        myEventsRepository.deleteMyEvent(event).handle(
+            onError = { msg ->
+                onFinish(false)
+                snackbarHostState.showSnackbar(
+                    message = msg
+                )
+            },
+            onSuccess = {
+                onFinish(true)
+                snackbarHostState.showSnackbar(
+                    message = "Successful"
+                )
+            }
+        )
+    }
+
 
         var cachedevents = mutableListOf<MyEventEntity>()
 

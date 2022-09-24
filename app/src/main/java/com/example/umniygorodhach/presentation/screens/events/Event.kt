@@ -177,6 +177,7 @@ private fun EventInfoWithList(
 						event = event,
 						playerViewModel = playerViewModel,
 						eventViewModel = eventViewModel,
+						myeventsViewModel =myeventsViewModel,
 						bottomSheetViewModel = bottomSheetViewModel
 					)
 				}
@@ -330,7 +331,7 @@ private fun ChosePlayers(
 	event: EventDetail,
 	playerViewModel: PlayerViewModel,
 	eventViewModel: EventViewModel,
-	myeventsViewModel: MyEventsViewModel = singletonViewModel(),
+	myeventsViewModel: MyEventsViewModel,
 	bottomSheetViewModel: BottomSheetViewModel) {
 	val players = playerViewModel.playerFlow.collectAsState().value
 
@@ -344,138 +345,167 @@ private fun ChosePlayers(
 
 	var isRefreshing by remember { mutableStateOf(false) }
 
+	val myeventsResource = myeventsViewModel.eventsResponsesFlow.collectAsState().value
 
-
-
-	Column(
-		modifier = Modifier
-			.fillMaxSize()
-	) {
-		Button(
-			modifier = Modifier
-				.fillMaxWidth(),
-			onClick = {
-				if(chosenPlayers.value.size>0) {
-					myeventsViewModel.insertEventToMyEvent(event,chosenPlayers.value as List<PlayerEntity>)
-
-					eventViewModel.registratePlayers(
-						event.id,
-						chosenPlayers.value as List<PlayerEntity>
-					) { isSuccess ->
-						if (isSuccess) {
-							navController.navigate("${AppScreen.MyEvents.navLink}")
-						}
-					}
-				}
-			}
-		) {
-			Text(
-				text = "Принять участие",
-				style = MaterialTheme.typography.h5,
-			)
-		}
-		SwipeRefresh(
-			modifier = Modifier
-				.fillMaxSize(),
-			state = rememberSwipeRefreshState(isRefreshing),
-			onRefresh = playerViewModel::onRefresh
-		) {
-
-			LazyColumn(
+	myeventsResource.handle(
+		onLoading = {
+			LoadingIndicator()
+		},
+		onError = { msg ->
+			LoadingError(msg = msg)
+		},
+		onSuccess = { myeventsList ->
+			Column(
 				modifier = Modifier
-					.fillMaxSize(),
-				verticalArrangement = Arrangement.spacedBy(10.dp),
-				contentPadding = PaddingValues(bottom = 15.dp, start = 20.dp, end = 20.dp),
-				userScrollEnabled = true
+					.fillMaxSize()
 			) {
-				item() {
-					Spacer(modifier = Modifier.height(15.dp))
-					Text(
-						text = stringResource(R.string.choseplayer),
-						style = MaterialTheme.typography.h4
-					)
-				}
-				item() {
-					Card(
-						modifier = Modifier
-							.fillMaxWidth()
-							.height(50.dp)
-							.clickable {
-								navController.navigate("${AppScreen.CreatePlayer.navLink}")
+				Button(
+					modifier = Modifier
+						.fillMaxWidth(),
+					onClick = {
+						if(myeventsList.find {  it->it.id == event.id}==null){
+							if (chosenPlayers.value.size > 0) {
+								myeventsViewModel.insertEventToMyEvent(
+									event,
+									chosenPlayers.value as List<PlayerEntity>
+								)
 
-							},
-						elevation = 2.dp,
-						shape = RoundedCornerShape(5.dp)
+								/*eventViewModel.registratePlayers(
+									event.id,
+									chosenPlayers.value as List<PlayerEntity>
+								) { isSuccess ->
+									if (isSuccess) {
+										navController.navigate("${AppScreen.MyEvents.navLink}")
+									}
+								}*/
+							}
+						}else{
+							myeventsViewModel.deleteEventfromMyEvent(
+								event.toMyEventEntity()
+							){
+
+							}
+						}
+					}
+				) {
+					if(myeventsList.find {  it->it.id == event.id}==null) {
+
+						Text(
+							text = "Принять участие",
+							style = MaterialTheme.typography.h5,
+						)
+					}else{
+						Text(
+							text = "Отменить участие",
+							style = MaterialTheme.typography.h5,
+						)
+					}
+				}
+				SwipeRefresh(
+					modifier = Modifier
+						.fillMaxSize(),
+					state = rememberSwipeRefreshState(isRefreshing),
+					onRefresh = playerViewModel::onRefresh
+				) {
+
+					LazyColumn(
+						modifier = Modifier
+							.fillMaxSize(),
+						verticalArrangement = Arrangement.spacedBy(10.dp),
+						contentPadding = PaddingValues(bottom = 15.dp, start = 20.dp, end = 20.dp),
+						userScrollEnabled = true
 					) {
-						Row(
-							horizontalArrangement = Arrangement.Center,
-							verticalAlignment = Alignment.CenterVertically
-						) {
-							Icon(
-								imageVector = Icons.Default.Add,
-								contentDescription = "add",
+						item() {
+							Spacer(modifier = Modifier.height(15.dp))
+							Text(
+								text = stringResource(R.string.choseplayer),
+								style = MaterialTheme.typography.h4
+							)
+						}
+						item() {
+							Card(
 								modifier = Modifier
-									.width(30.dp)
-									.height(30.dp)
+									.fillMaxWidth()
+									.height(50.dp)
+									.clickable {
+										navController.navigate("${AppScreen.CreatePlayer.navLink}")
 
-							)
-						}
-					}
-				}
-				items(
-					items = players,
+									},
+								elevation = 2.dp,
+								shape = RoundedCornerShape(5.dp)
+							) {
+								Row(
+									horizontalArrangement = Arrangement.Center,
+									verticalAlignment = Alignment.CenterVertically
+								) {
+									Icon(
+										imageVector = Icons.Default.Add,
+										contentDescription = "add",
+										modifier = Modifier
+											.width(30.dp)
+											.height(30.dp)
 
-					) { player ->
-
-
-					Card(
-						modifier = Modifier
-							.fillMaxWidth()
-
-							.clickable {
-								if (!chosenPlayers.value.contains(player)) {
-									chosenPlayers.value.add(player)
-									colorCard[players.indexOf(player)] = Color.Cyan
-								} else {
-									chosenPlayers.value.remove(player);
-									colorCard[players.indexOf(player)] = Color.Gray
+									)
 								}
-
-								Log.d("Players", chosenPlayers.value.size.toString())
-								Log.d("PlayersC", colorCard[players.indexOf(player)].toString())
-							},
-						elevation = 2.dp,
-						shape = RoundedCornerShape(5.dp),
-						backgroundColor = colorCard[players.indexOf(player)]
-					) {
-						Column(
-							modifier = Modifier
-								.padding(15.dp)
-						) {
-							Text(
-								text = player.lastname,
-								style = MaterialTheme.typography.h6,
-							)
-							Text(
-								text = player.firstname,
-								style = MaterialTheme.typography.h6,
-							)
-							Text(
-								text = player.middlename,
-								style = MaterialTheme.typography.h6,
-							)
-							Text(
-								text = "Возраст: " + player.age.toString(),
-								style = MaterialTheme.typography.subtitle1,
-								color = AppColors.greyText.collectAsState().value
-							)
-
-							Spacer(Modifier.height(5.dp))
-
-
+							}
 						}
-					}
-					/*PlayerCard(
+						items(
+							items = players,
+
+							) { player ->
+
+
+							Card(
+								modifier = Modifier
+									.fillMaxWidth()
+
+									.clickable {
+										if (!chosenPlayers.value.contains(player)) {
+											chosenPlayers.value.add(player)
+											colorCard[players.indexOf(player)] = Color.Cyan
+										} else {
+											chosenPlayers.value.remove(player);
+											colorCard[players.indexOf(player)] = Color.Gray
+										}
+
+										Log.d("Players", chosenPlayers.value.size.toString())
+										Log.d(
+											"PlayersC",
+											colorCard[players.indexOf(player)].toString()
+										)
+									},
+								elevation = 2.dp,
+								shape = RoundedCornerShape(5.dp),
+								backgroundColor = colorCard[players.indexOf(player)]
+							) {
+								Column(
+									modifier = Modifier
+										.padding(15.dp)
+								) {
+									Text(
+										text = player.lastname,
+										style = MaterialTheme.typography.h6,
+									)
+									Text(
+										text = player.firstname,
+										style = MaterialTheme.typography.h6,
+									)
+									Text(
+										text = player.middlename,
+										style = MaterialTheme.typography.h6,
+									)
+									Text(
+										text = "Возраст: " + player.age.toString(),
+										style = MaterialTheme.typography.subtitle1,
+										color = AppColors.greyText.collectAsState().value
+									)
+
+									Spacer(Modifier.height(5.dp))
+
+
+								}
+							}
+							/*PlayerCard(
 					modifier = Modifier
 						.fillMaxWidth()
 						.clickable {
@@ -493,12 +523,12 @@ private fun ChosePlayers(
 					listplayers = players,
 					player = player
 				)*/
+						}
+					}
 				}
 			}
-		}
-	}
-	Log.d("Players",players.toString())
-
+			Log.d("Players", players.toString())
+		})
 }
 
 @Composable

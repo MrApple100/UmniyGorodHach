@@ -55,6 +55,22 @@ class PlayerViewModel @Inject constructor(
             }
         )
     }
+    fun onDeletePlayer(player: PlayerEntity,onFinish: (Boolean) ->Unit) = viewModelScope.launch {
+        playerRepository.deletePlayers(player).handle(
+            onError = { msg ->
+                onFinish(false)
+                snackbarHostState.showSnackbar(
+                    message = msg
+                )
+            },
+            onSuccess = {
+                onFinish(true)
+                snackbarHostState.showSnackbar(
+                    message = "Successful"
+                )
+            }
+        )
+    }
 
     fun onResourseSuccess(players: MutableList<PlayerEntity>) {
         _playerFlow.value = players
